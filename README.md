@@ -12,3 +12,10 @@ Errores al importar Colorama
   pip install colorama
 
 Importar biblioteca tabulate desde la consola de visual studio code --> pip install tabulate 
+
+cambios en el diseño del boton 
+
+relief=tk.RAISED agrega un efecto de relieve al botón.
+bg="lightblue" establece el color de fondo del botón en azul claro.
+fg="black" establece el color del texto del botón en negro.
+font=("Helvetica", 12, "bold") establece el tipo de letra en Helvetica, el tamaño del texto en 12 puntos y lo hace en negrita.
