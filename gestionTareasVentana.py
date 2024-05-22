@@ -1,19 +1,27 @@
 import tkinter as tk
 from tkinter import messagebox
 
+#CASO PRACTICO FINAL PYTHON -- CARMEN SALAS
+# Clase que permite almacenar y gestionar una lista de tareas
 class TareasPendientes:
+    
+    # Constructor de la clase
     def __init__(self):
         self.tareas = []
 
+    # Metodos
+    # Agregar nueva tarea
     def agregar_tarea(self, tarea):
         self.tareas.append({"descripcion": tarea, "completada": False})
 
+    # Marca una tarea como completada
     def marcar_completada(self, indice):
         try:
             self.tareas[indice]["completada"] = True
         except IndexError:
             mostrar_error("La posición ingresada no existe en la lista de tareas.")
 
+    # Muestra todas las tareas
     def mostrar_tareas(self):
         if not self.tareas:
             return "No hay tareas pendientes."
@@ -23,14 +31,14 @@ class TareasPendientes:
                 estado = "Completada" if tarea["completada"] else "Pendiente"
                 tareas += f"{i+1}. {tarea['descripcion']} - {estado}\n"
             return tareas
-
+    # Eliminar tarea 
     def eliminar_tarea(self, indice):
         try:
             del self.tareas[indice]
         except IndexError:
             mostrar_error("La posición ingresada no existe en la lista de tareas.")
 
-
+# Metodo para tratar los errores
 def mostrar_error(mensaje):
     ventana_error = tk.Toplevel()
     ventana_error.title("Error")
@@ -38,22 +46,24 @@ def mostrar_error(mensaje):
     boton_cerrar = tk.Button(ventana_error, text="Cerrar", command=ventana_error.destroy)
     boton_cerrar.pack()
 
+# Tratar metodos en ventana
 def agregar_tarea():
     tarea = entrada_tarea.get()
     lista_tareas.agregar_tarea(tarea)
-    entrada_tarea.delete(0, tk.END)  # Limpiar el texto del Entry después de agregar la tarea
+    entrada_tarea.delete(0, tk.END)  # Limpiar el texto de entrada
     actualizar_texto()
+
 
 def marcar_completada():
     indice = int(entrada_indice.get()) - 1
     lista_tareas.marcar_completada(indice)
-    entrada_indice.delete(0, tk.END) 
+    entrada_indice.delete(0, tk.END) # Limpiar el texto de entrada
     actualizar_texto()
 
 def mostrar_tareas():
     texto_tareas.config(state="normal")
-    texto_tareas.delete(1.0, tk.END)
-    texto_tareas.insert(tk.END, lista_tareas.mostrar_tareas())
+    texto_tareas.delete(1.0, tk.END) # Limpiar el texto de entrada
+    texto_tareas.insert(tk.END, lista_tareas.mostrar_tareas()) 
     texto_tareas.config(state="disabled")
 
 def eliminar_tarea():
@@ -62,10 +72,11 @@ def eliminar_tarea():
         if indice.isdigit():  # Verificar si el índice es un número
             indice = int(indice) - 1
             if 0 <= indice < len(lista_tareas.tareas):  # Verificar si el índice está dentro del rango válido
-                lista_tareas.eliminar_tarea(indice)
                 entrada_indice_eliminar.delete(0, tk.END)
+                lista_tareas.eliminar_tarea(indice)
                 actualizar_texto()
             else:
+                entrada_indice_eliminar.delete(0, tk.END)
                 mostrar_error("La posición ingresada no existe en la lista de tareas.")
         else:
             mostrar_error("Ingrese un número válido para el índice.")
